@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Animated, Platform, TouchableOpacity, StyleSheet, Text, TextInput, Keyboard, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
+import { ScrollView, View, Animated, Platform, TouchableOpacity, StyleSheet, Text, TextInput, Keyboard, KeyboardAvoidingView, ActivityIndicator, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Satellite, NavigationActions } from '../../utils'
@@ -26,20 +26,28 @@ export default class SignIn extends Component<Props> {
       name: '',
       email: '',
       password: '',
-      isProcessing: false
+      isProcessing: false,
+      showPass: true
     }
   }
 
-  componentDidMount() {
-  }
-
   verify(name, email, password) {
-    // Satellite.defaults.headers.common['Authorization'] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsIm5hbWUiOiJSaWRobyAwMSIsImVtYWlsIjoicmlkaG8wMUBnbWFpbC5jb20iLCJ1cGRhdGVkQXQiOiIyMDE5LTA4LTA1VDA2OjI4OjUyLjUxNloiLCJjcmVhdGVkQXQiOiIyMDE5LTA4LTA1VDA2OjI4OjUyLjUxNloiLCJpYXQiOjE1NjQ5ODY1MzJ9.tM_JydaA7H586rQeEYwcc2oriZhIiZj3GzEf_wxkdoU`
-    // this.doLogin('ridho02@gmail.com', 'Password123')
-    this.setState({ isProcessing: true }, () => console.log('Processing'))
+    this.setState({ isProcessing: true })
+    if (name === '') {
+      Alert.alert('Please input the name')
+      this.setState({ isProcessing: false })
+    } else if (email === '') {
+      Alert.alert('Please input the email')
+      this.setState({ isProcessing: false })
+    } else if (password === '') {
+      Alert.alert('Please input the password')
+      this.setState({ isProcessing: false })
+    } else {
+      this.doRegister(name, email, password)
+    }
   }
 
-  doRegister(email, password) {
+  doRegister(name, email, password) {
     Satellite.post(ENDPOINT.REGISTER, {
       name: name,
       email: email,
@@ -51,7 +59,10 @@ export default class SignIn extends Component<Props> {
         this.props.dispatch(authenticated(response.data.data, () => NavigationActions.goToReset('Home')))
       }
     }).catch((err) => {
-      console.log('ERROR', err)
+      const message = err.response.data.data.message
+      console.log('ERROR', message)
+      Alert.alert('Attention', message)
+      this.setState({ isProcessing: false })
     })
   }
 
@@ -59,8 +70,12 @@ export default class SignIn extends Component<Props> {
     this.props.navigation.goBack(null)
   }
 
+  toggleVisibility() {
+    this.setState({ showPass: !this.state.showPass })
+  }
+
   render() {
-    const { name, email, password, isProcessing } = this.state
+    const { name, email, password, isProcessing, showPass } = this.state
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 20 }}>
@@ -103,11 +118,14 @@ export default class SignIn extends Component<Props> {
                 value={this.state.password}
                 placeholder={'Input password here...'}
                 placeholderTextColor={COLORS.textGray}
-                secureTextEntry={true}
+                secureTextEntry={showPass}
                 autoCapitalize={'none'}
                 autoCorrect={false}
                 underlineColorAndroid={'white'}
                 />
+              <TouchableOpacity onPress={() => this.toggleVisibility()}>
+                <Text style={[styled.subtitle, { paddingTop: 10, fontSize: 12, textAlign: 'right' }]}>{showPass ? 'Show Password' : 'Hide Password'}</Text>
+              </TouchableOpacity>
 
             </View>
           </Animated.View>
@@ -119,7 +137,7 @@ export default class SignIn extends Component<Props> {
             <ActivityIndicator color={COLORS.colorWhite} size={'large'} />
           </View>
         ): (
-          <Button style={{ flexDirection: 'column', position: 'absolute',  bottom: 20, right: 20 }} onPress={() => this.verify(email, password)} buttonText={'Proceed'} backgroundColor={'transparent'} buttonTextColor={COLORS.text} />
+          <Button style={{ flexDirection: 'column', position: 'absolute',  bottom: 20, right: 20 }} onPress={() => this.verify(name, email, password)} buttonText={'Proceed'} backgroundColor={'transparent'} buttonTextColor={COLORS.text} />
         )}
       </View>
     )
