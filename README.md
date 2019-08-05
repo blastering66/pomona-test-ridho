@@ -1,2 +1,2 @@
-# pomona-test-ridho
-Ridho Maulana - Pomona Test Skill
+# pomona-ridho
+Pomona Skill Test

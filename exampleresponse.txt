@@ -1,0 +1,31 @@
+RESPONSE TODO POST
+{
+    "data": {
+        "isDone": false,
+        "id": 42,
+        "title": "First Todo",
+        "priority": 1,
+        "note": "Pertama kali todo",
+        "user_id": 17,
+        "updatedAt": "2019-08-05T06:39:08.426Z",
+        "createdAt": "2019-08-05T06:39:08.426Z"
+    },
+    "statusCode": 200
+}
+
+RESPONSE GET TODO
+{
+    "data": [
+        {
+            "id": 42,
+            "title": "First Todo",
+            "note": "Pertama kali todo",
+            "isDone": false,
+            "priority": 1,
+            "user_id": 17,
+            "createdAt": "2019-08-05T06:39:08.426Z",
+            "updatedAt": "2019-08-05T06:39:08.426Z"
+        }
+    ],
+    "statusCode": 200
+}
