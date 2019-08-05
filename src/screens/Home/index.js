@@ -11,7 +11,7 @@ const RootTabs = createBottomTabNavigator({
     navigationOptions: {
       title: 'Home',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={'md-home'} color={focused ? 'blue' : '#dddd'} style={styles.tabIcon}/>
+        <Ionicons name={'md-home'} color={focused ? tintColor : '#dddd'} size={30} style={styles.tabIcon}/>
       )
     }
   },
@@ -20,7 +20,7 @@ const RootTabs = createBottomTabNavigator({
     navigationOptions: {
       title: 'Profile',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons name={'md-home'} color={focused ? 'blue' : '#dddd'} style={styles.tabIcon}/>
+        <Ionicons name={'md-contact'} color={focused ? tintColor : '#dddd'} size={30} style={styles.tabIcon}/>
       )
     }
   }
@@ -30,9 +30,10 @@ const ios = Platform.OS === 'ios'
 // import strings from './utils/multilangstring'
 const styles = StyleSheet.create({
   tabIcon: {
-    width: ios ? 28 : 28,
-    height: ios ? 28 : 28,
-    top: ios ? 1 : 5
+    width: 50,
+    height: 50,
+    top: ios ? 10 : 20,
+    left: ios ? 12 : 20
   }
 })
 
