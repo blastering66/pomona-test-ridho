@@ -3,6 +3,7 @@ import { View, Platform, TouchableOpacity, StyleSheet, Text, TextInput } from 'r
 import Welcome from './screens/Auth/Welcome'
 import Service from './screens/Auth/Service'
 import SignIn from './screens/Auth/Signin'
+import Register from './screens/Auth/Register'
 import Home from './screens/Home'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 const ios = Platform.OS === 'ios'
@@ -15,6 +16,9 @@ export default createStackNavigator({
   },
   SignIn: {
     screen: SignIn
+  },
+  Register: {
+    screen: Register
   },
   Home: {
     screen: Home
