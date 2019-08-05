@@ -71,7 +71,7 @@ class Home extends Component<Props> {
       <View style={[ styled.container, { justifyContent: 'center', alignItems: 'center', paddingTop: 20 } ]}>
         { isLoading ? (
           <View style={{ alignSelf: 'center' }}>
-            <ActivityIndicator size={'large'} color={COLORS.colorAppTheme} />
+            <ActivityIndicator size={'large'} color={COLORS.colorWhite} />
           </View>
         ) : (
           <SectionList
