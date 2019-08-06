@@ -4,6 +4,7 @@ import Welcome from './screens/Auth/Welcome'
 import Service from './screens/Auth/Service'
 import SignIn from './screens/Auth/Signin'
 import Register from './screens/Auth/Register'
+import Detail from './screens/Detail'
 import Home from './screens/Home'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 const ios = Platform.OS === 'ios'
@@ -22,6 +23,9 @@ export default createStackNavigator({
   },
   Home: {
     screen: Home
+  },
+  Detail: {
+    screen: Detail
   }
 }, {
   headerMode: 'none',

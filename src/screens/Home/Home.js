@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, Text, Image, Platform, StyleSheet, TouchableOpacity, ActivityIndicator, SectionList } from 'react-native'
+import { View, Text, Image, Platform, StyleSheet, TouchableOpacity, ActivityIndicator, SectionList, TouchableWithoutFeedback } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { signout } from '../../store/actions/authActions'
 import { Button } from '../../components'
 import { connect } from 'react-redux'
 import { COLORS } from '../../utils/res'
-import { Satellite } from '../../utils'
+import { Satellite, NavigationActions } from '../../utils'
 import { ENDPOINT } from '../../utils/config'
 import styled from './styled'
 
@@ -58,11 +58,11 @@ class Home extends Component<Props> {
   }
 
   goToAddPage() {
-    this.props.navigation.navigate('AddNew')
+    NavigationActions.goToStackDetails(this.props.navigation, 'AddNew', { })
   }
 
   goToDetail() {
-    this.props.navigation.navigate('Detail')
+    NavigationActions.goToStackDetails(this.props.navigation, 'Todo', { id: 42 })
   }
 
   render() {
@@ -90,14 +90,16 @@ class Home extends Component<Props> {
             }}
             renderItem={({ item, index, section }) => {
               return (
-                <View style={styled.container_row}>
-                  <Text style={styled.row_title}>{item.title}</Text>
-                  <Text style={styled.row_note}>{item.note}</Text>
-                  <View style={{ alignSelf: 'center', position: 'absolute', top: -20, right: 10, flexDirection: 'row' }}>
-                    <Ionicons name='md-attach' size={35} color={'#d4d8d9'} style={{ margin: 8 }} />
-                    <Ionicons name='md-attach' size={35} color={'#d4d8d9'} style={{ margin: 8 }}/>
+                <TouchableWithoutFeedback onPress={() => this.goToDetail()}>
+                  <View style={styled.container_row}>
+                    <Text style={styled.row_title}>{item.title}</Text>
+                    <Text style={styled.row_note}>{item.note}</Text>
+                    <View style={{ alignSelf: 'center', position: 'absolute', top: -20, right: 10, flexDirection: 'row' }}>
+                      <Ionicons name='md-attach' size={35} color={'#d4d8d9'} style={{ margin: 8 }} />
+                      <Ionicons name='md-attach' size={35} color={'#d4d8d9'} style={{ margin: 8 }}/>
+                    </View>
                   </View>
-                </View>
+                </TouchableWithoutFeedback>
               )
             }}
 

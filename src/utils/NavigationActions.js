@@ -38,7 +38,7 @@ class AppNavigationActions {
   goToStackDetails(nav, screenName, params) {
     nav.navigate(
       NavigationActions.navigate({
-        routeName: 'StackDetails',
+        routeName: 'Detail',
         action: NavigationActions.navigate({
           routeName: screenName, params: params
         })
