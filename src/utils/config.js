@@ -8,7 +8,7 @@ module.exports = {
     ALL_TODO: '/todo/user',
     CREATE_TODO: '/todo',
     DETAIL_TODO: '/todo/:id',
-    UPDATE_TODO: '/todo/:id',
+    UPDATE_TODO: '/todo',
     DELETE_TODO: '/todo/:id'
   }
 }

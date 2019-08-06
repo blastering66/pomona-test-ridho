@@ -21,7 +21,8 @@ export default StyleSheet.create({
   container_row: {
     flexDirection: 'column',
     backgroundColor: COLORS.colorWhite,
-    padding: 10
+    padding: 10,
+    marginBottom: 15
   },
   row_title: {
     fontSize: 18,

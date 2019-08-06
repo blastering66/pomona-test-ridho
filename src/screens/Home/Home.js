@@ -61,8 +61,8 @@ class Home extends Component<Props> {
     NavigationActions.goToStackDetails(this.props.navigation, 'AddNew', { })
   }
 
-  goToDetail() {
-    NavigationActions.goToStackDetails(this.props.navigation, 'Todo', { id: 42 })
+  goToDetail(item) {
+    NavigationActions.goToStackDetails(this.props.navigation, 'Todo', { item: item })
   }
 
   render() {
@@ -90,7 +90,7 @@ class Home extends Component<Props> {
             }}
             renderItem={({ item, index, section }) => {
               return (
-                <TouchableWithoutFeedback onPress={() => this.goToDetail()}>
+                <TouchableWithoutFeedback onPress={() => this.goToDetail(item)}>
                   <View style={styled.container_row}>
                     <Text style={styled.row_title}>{item.title}</Text>
                     <Text style={styled.row_note}>{item.note}</Text>
@@ -102,7 +102,11 @@ class Home extends Component<Props> {
                 </TouchableWithoutFeedback>
               )
             }}
-
+            onEndReached={(endValue) => {
+              // FETCH LOAD MORE
+              console.log('LOAD MORE')
+            }}
+            onEndReachedThreshold={0.5}
           />
         )}
 
