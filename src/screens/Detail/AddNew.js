@@ -93,9 +93,21 @@ class AddNew extends Component<Props> {
 
             <Text style={[styled.subtitle, { paddingTop: 20 }]}>Priority</Text>
             <View style={{ flex: 1, flexDirection: 'row', paddingTop: 20 }}>
-              <Button style={{ flex: 1 }} onPress={() => this.setPrio(1)} buttonText={'Low'} backgroundColor={'transparent'} buttonTextColor={COLORS.colorBlack} />
-              <Button style={{ flex: 1, paddingHorizontal: 10 }} onPress={() => this.setPrio(2)} buttonText={'Medium'} backgroundColor={'transparent'} buttonTextColor={COLORS.colorBlack} />
-              <Button style={{ flex: 1 }} onPress={() => this.setPrio(3)} buttonText={'Hight'} backgroundColor={'transparent'} buttonTextColor={COLORS.colorBlack} />
+            <TouchableOpacity onPress={() => this.setPrio(1)} style={{ flex: 1 }}>
+              <View style={{ borderRadius: 25, borderWidth: 1, borderColor: priority == 1 ? 'transparent' : 'white', backgroundColor: priority == 1 ? 'white' : 'transparent' }}>
+                <Text style={{ color: priority == 1 ? COLORS.colorAppTheme : 'white', fontSize: 16, padding: 10, textAlign: 'center' }}>Low</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setPrio(2)} style={{ flex: 1, marginHorizontal: 10 }}>
+              <View style={{ borderRadius: 25, borderWidth: 1, borderColor: priority == 2 ? 'transparent' : 'white', backgroundColor: priority == 2 ? 'white' : 'transparent' }}>
+                <Text style={{ color: priority == 2 ? COLORS.colorAppTheme : 'white', fontSize: 16, padding: 10, textAlign: 'center' }}>Medium</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setPrio(3)} style={{ flex: 1 }}>
+              <View style={{ borderRadius: 25, borderWidth: 1, borderColor: priority == 3 ? 'transparent' : 'white', backgroundColor: priority == 3 ? 'white' : 'transparent' }}>
+                <Text style={{ color: priority == 3 ? COLORS.colorAppTheme : 'white', fontSize: 16, padding: 10, textAlign: 'center' }}>High</Text>
+              </View>
+            </TouchableOpacity>
             </View>
 
             <Text style={[styled.subtitle, { paddingTop: 50 }]}>Note</Text>
