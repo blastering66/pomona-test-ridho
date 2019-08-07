@@ -7,14 +7,11 @@ export default function authMiddleware({ getState, dispatch }) {
     const returnValue = next(action)
     const state = getState()
 
-    // if (state.authData && state.authData.oauth && state.authData.oauth.access_token) {
-    //   Satellite.defaults.headers.common['Authorization'] = `Bearer ${state.authData.oauth.access_token}`
-    // } else {
-    //   Satellite.defaults.headers.common['Authorization'] = null
-    // }
-
-
-    Satellite.defaults.headers.common['Authorization'] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsIm5hbWUiOiJSaWRobyAwMSIsImVtYWlsIjoicmlkaG8wMUBnbWFpbC5jb20iLCJ1cGRhdGVkQXQiOiIyMDE5LTA4LTA1VDA2OjI4OjUyLjUxNloiLCJjcmVhdGVkQXQiOiIyMDE5LTA4LTA1VDA2OjI4OjUyLjUxNloiLCJpYXQiOjE1NjQ5ODY1MzJ9.tM_JydaA7H586rQeEYwcc2oriZhIiZj3GzEf_wxkdoU`
+    if (state.token !== '') {
+      Satellite.defaults.headers.common['Authorization'] = `${state.authData.token}`
+    } else {
+      Satellite.defaults.headers.common['Authorization'] = null
+    }
 
     if (action.type === '@LOCALSTORAGE/REHYDRATE') {
       const data = action.data
@@ -30,10 +27,6 @@ export default function authMiddleware({ getState, dispatch }) {
       Application.emit('LoggedIn')
       dispatch({ type: '@APP/AUTH_AUTHENTICATED' })
     }
-
-    // if (action.type === '@APP/PROFILE_SAVE') {
-    //   dispatch(NavigationActions.goToReset('SignedIn'))
-    // }
 
     if (action.type === '@APP/AUTH_SIGN_OUT') {
       Application.emit('LoggedOut')

@@ -57,12 +57,23 @@ class Home extends Component<Props> {
     }, () => this.getMyList())
   }
 
+  doRefreshNow = () => {
+    this.doRefresh()
+  }
+
   goToAddPage() {
-    NavigationActions.goToStackDetails(this.props.navigation, 'AddNew', { })
+    NavigationActions.goToStackDetails(this.props.navigation, 'AddNew', {
+      refreshType: 'refreshNow',
+      refreshFunction: this.doRefreshNow
+    })
   }
 
   goToDetail(item) {
-    NavigationActions.goToStackDetails(this.props.navigation, 'Todo', { item: item })
+    NavigationActions.goToStackDetails(this.props.navigation, 'Todo', {
+      item: item,
+      refreshType: 'refreshNow',
+      refreshFunction: this.doRefreshNow
+    })
   }
 
   render() {
@@ -76,7 +87,7 @@ class Home extends Component<Props> {
         ) : (
           <SectionList
             ref='SectionList'
-            style={{ width: '100%', heigth: '100%', paddingTop: 50, paddingHorizontal: 10 }}
+            style={{ width: '100%', heigth: '100%', paddingTop: 50, paddingHorizontal: 10, marginBottom: 10 }}
             sections={[ { title: 'My Todo', data: data } ]}
             stickySectionHeadersEnabled={false}
             renderSectionHeader={({ section: { title } }) => {

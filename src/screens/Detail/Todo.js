@@ -21,12 +21,12 @@ class Todo extends Component<Props> {
   constructor(props){
     super(props)
     this.state = {
-      mytodo: {},
       id: 0,
       title: '',
       priority: 1,
       note: '',
       isProcessing: false,
+      isDeleting: false,
       editable: true
     }
   }
@@ -35,11 +35,12 @@ class Todo extends Component<Props> {
     const mytodo = this.props.navigation.state.params.item
     console.log('params Todo', mytodo)
     this.setState({
-      mytodo: mytodo,
       id: mytodo.id,
       title: mytodo.title,
       priority: mytodo.priority,
-      note: mytodo.note
+      note: mytodo.note,
+      refreshType: this.props.navigation.state.params.refreshType,
+      refreshFunction: this.props.navigation.state.params.refreshFunction
     })
   }
 
@@ -52,7 +53,7 @@ class Todo extends Component<Props> {
       Alert.alert('Please input the Note')
       this.setState({ isProcessing: false })
     } else {
-      this.doUpdate(this.state.mytodo)
+      this.doUpdate()
     }
   }
 
@@ -60,40 +61,39 @@ class Todo extends Component<Props> {
     this.setState({ priority: value })
   }
 
-  doUpdate(mytodo) {
+  doUpdate() {
+    const self = this
     const params = {
-      id: mytodo.id,
-      title: mytodo.title,
-      priority: mytodo.priority,
-      note: mytodo.note
+      title: this.state.title,
+      priority: this.state.priority,
+      note: this.state.note
     }
-    console.log('params', params)
-    console.log('Satellite', ENDPOINT.UPDATE_TODO + '/id:' + mytodo.id , params)
-    Satellite.put(ENDPOINT.UPDATE_TODO + '/id:' + mytodo.id , params)
+    Satellite.put(ENDPOINT.UPDATE_TODO + this.state.id , params)
     .then((response) => {
-      console.log('response', response)
-      console.log('response.data.data', response.data.data)
-      this.setState({ isProcessing: false }, () => this.props.navigation.goBack(null))
+      const refreshFunc = self.state.refreshFunction
+      const refreshType = self.state.refreshType
+      if (refreshType === 'refreshNow') {
+        refreshFunc()
+      }
+      self.props.navigation.goBack(null)
     }).catch((err) => {
       // const message = err.response.data.data.message
-      console.log('ERROR', err.response)
-      console.log('ERROR', err.response.data)
-      console.log('ERROR', err.response.data.data)
       Alert.alert('Attention', err.response.data.data.message)
       this.setState({ isProcessing: false })
     })
   }
 
   doDelete() {
-    Satellite.delete(ENDPOINT.UPDATE_TODO + '/id:' + this.state.mytodo.id)
+    const self = this
+    Satellite.delete(ENDPOINT.UPDATE_TODO + this.state.id)
     .then((response) => {
-      console.log('response', response)
-      console.log('response.data.data', response.data.data)
-      this.setState({ isProcessing: false }, () => this.props.navigation.goBack(null))
+      const refreshFunc = self.state.refreshFunction
+      const refreshType = self.state.refreshType
+      if (refreshType === 'refreshNow') {
+        refreshFunc()
+      }
+      self.props.navigation.goBack(null)
     }).catch((err) => {
-      console.log('ERROR', err.response)
-      console.log('ERROR', err.response.data)
-      console.log('ERROR', err.response.data.data)
       Alert.alert('Attention', err.response.data.data.message)
       this.setState({ isProcessing: false })
     })
@@ -112,7 +112,7 @@ class Todo extends Component<Props> {
   }
 
   render() {
-    const { title, priority, note, isProcessing, editable } = this.state
+    const { title, priority, note, isProcessing, isDeleting, editable } = this.state
     return (
       <View style={[ styled.container, { } ]}>
         <View style={{ flex: 1, paddingTop: 50, flexDirection: 'column' }}>
@@ -180,7 +180,14 @@ class Todo extends Component<Props> {
             <Button style={{ flexDirection: 'column', position: 'absolute',  bottom: 20, right: 20 }} onPress={() => this.verify(title, note)} buttonText={'  Update  '} backgroundColor={'transparent'} buttonTextColor={COLORS.text} />
           )}
 
-          <Button style={{ flexDirection: 'column', position: 'absolute',  top: 50, right: 20 }} onPress={() => this.doDelete()} buttonText={'  Delete  '} backgroundColor={'transparent'} buttonTextColor={COLORS.text} />
+          { isDeleting ? (
+            <View style={{ flexDirection: 'column', position: 'absolute',  top: 50, right: 20 }}>
+              <ActivityIndicator color={COLORS.colorWhite} size={'large'} />
+            </View>
+          ): (
+            <Button style={{ flexDirection: 'column', position: 'absolute',  top: 50, right: 20 }} onPress={() => this.doDelete()} buttonText={'  Delete  '} backgroundColor={'transparent'} buttonTextColor={COLORS.text} />
+          )}
+
         </View>
       </View>
     )
