@@ -61,7 +61,6 @@ class AddNew extends Component<Props> {
       priority: prio,
       note: note
     }
-    console.log('params', params)
     Satellite.post(ENDPOINT.CREATE_TODO, params)
     .then((response) => {
       const refreshFunc = self.state.refreshFunction
@@ -98,7 +97,7 @@ class AddNew extends Component<Props> {
               value={this.state.title}
               placeholder={'Input title here...'}
               placeholderTextColor={COLORS.textGray}
-              underlineColorAndroid={'white'}
+              underlineColorAndroid={'transparent'}
               multiline={false}
               numberOfLines={1}
               />
@@ -131,7 +130,7 @@ class AddNew extends Component<Props> {
               value={this.state.note}
               placeholder={'Input note here...'}
               placeholderTextColor={COLORS.textGray}
-              underlineColorAndroid={'white'}
+              underlineColorAndroid={'transparent'}
               multiline={true}
               numberOfLines={3}
               />

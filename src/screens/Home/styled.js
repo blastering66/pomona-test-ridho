@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { COLORS } from '../../utils/res'
+
+const ios = Platform == 'ios'
 
 export default StyleSheet.create({
   container: {
@@ -22,7 +24,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: COLORS.colorWhite,
     padding: 10,
-    marginBottom: 15
+    margin: ios ? 0 : 15
   },
   row_title: {
     fontSize: 18,

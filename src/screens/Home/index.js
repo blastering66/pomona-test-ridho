@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   tabIcon: {
     width: 50,
     height: 50,
-    top: ios ? 10 : 20,
-    left: ios ? 12 : 20
+    top: 10,
+    left: 12
   }
 })
 

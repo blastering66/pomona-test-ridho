@@ -92,7 +92,7 @@ export default class SignIn extends Component<Props> {
               value={this.state.email}
               placeholder={'Input email here...'}
               placeholderTextColor={COLORS.textGray}
-              underlineColorAndroid={'white'}
+              underlineColorAndroid={'transparent'}
               multiline={false}
               numberOfLines={1}
               />
@@ -107,7 +107,7 @@ export default class SignIn extends Component<Props> {
               secureTextEntry={showPass}
               autoCapitalize={'none'}
               autoCorrect={false}
-              underlineColorAndroid={'white'}
+              underlineColorAndroid={'transparent'}
               />
             <TouchableOpacity onPress={() => this.toggleVisibility()}>
               <Text style={[styled.subtitle, { paddingTop: 10, fontSize: 12, textAlign: 'right' }]}>{showPass ? 'Show Password' : 'Hide Password'}</Text>

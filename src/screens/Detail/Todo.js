@@ -127,7 +127,7 @@ class Todo extends Component<Props> {
               value={this.state.title}
               placeholder={'Input title here...'}
               placeholderTextColor={COLORS.textGray}
-              underlineColorAndroid={'white'}
+              underlineColorAndroid={'transparent'}
               multiline={false}
               numberOfLines={1}
               editable={editable}
@@ -163,7 +163,7 @@ class Todo extends Component<Props> {
               value={this.state.note}
               placeholder={'Input note here...'}
               placeholderTextColor={COLORS.textGray}
-              underlineColorAndroid={'white'}
+              underlineColorAndroid={'transparent'}
               multiline={false}
               numberOfLines={2}
               editable={editable}
